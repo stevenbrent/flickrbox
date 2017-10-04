@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const galleryRequest = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key=031c640e4395c08b6e604af80abc7669&gallery_id=72157677375993701&format=json&nojsoncallback=1";
+const apiKey = "031c640e4395c08b6e604af80abc7669";
+const galleryID = "72157677375993701";
+
+const galleryRequest = `https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&api_key=${apiKey}&gallery_id=${galleryID}&format=json&nojsoncallback=1`;
 var qSpeed = new URLSearchParams(window.location.search).get("speed");
 var shuffleSpeed =  qSpeed != null ? qSpeed : 2000;
 
@@ -12,9 +15,8 @@ var photoCount;
 class App extends Component {
   imageLoader() {
     var currentImg = gallery[Math.floor(Math.random() * (photoCount - 1))];
-    console.log('loading image');
-    var imgel = document.getElementById("dynImg");
-    imgel.src = currentImg;
+    var imgDiv = document.querySelector('.App');
+    imgDiv.style.backgroundImage = `url(${currentImg})`;
   }
   componentDidMount() {
     fetch(galleryRequest)
@@ -38,7 +40,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <img id='dynImg' src='' alt='cute'></img>
       </div>
     );
   }
